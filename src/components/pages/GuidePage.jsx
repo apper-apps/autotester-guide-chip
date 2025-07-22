@@ -10,7 +10,7 @@ import { guideService } from "@/services/api/guideService";
 const GuidePage = () => {
   const [steps, setSteps] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [showProgressBar, setShowProgressBar] = useState(true);
   const loadSteps = async () => {
     try {
       setLoading(true);
@@ -39,11 +39,12 @@ const GuidePage = () => {
   const totalSteps = steps.length;
 return (
     <div className="min-h-screen bg-white">
-      {/* Progress Bar at Top */}
-      {!loading && totalSteps > 0 && (
+{/* Progress Bar at Top */}
+      {!loading && totalSteps > 0 && showProgressBar && (
         <ProgressBar 
           completedSteps={completedSteps}
           totalSteps={totalSteps}
+          onClose={() => setShowProgressBar(false)}
         />
       )}
 
