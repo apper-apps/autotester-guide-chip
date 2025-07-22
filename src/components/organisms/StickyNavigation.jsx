@@ -9,6 +9,7 @@ import { guideService } from "@/services/api/guideService";
 const StickyNavigation = () => {
   const [steps, setSteps] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const sectionIds = ["prerequisites", "step-1", "step-2", "step-3", "step-4", "pro-tips"];
@@ -47,7 +48,7 @@ const StickyNavigation = () => {
   return (
     <>
       {/* Mobile Toggle Button */}
-      <div className="lg:hidden fixed top-6 right-6 z-50">
+<div className="lg:hidden fixed top-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-3 bg-white rounded-full shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-200"
@@ -56,13 +57,15 @@ const StickyNavigation = () => {
         </button>
       </div>
 
-      {/* Navigation Sidebar */}
+{/* Navigation Sidebar */}
       <div className={`
-        fixed top-0 right-0 h-full w-80 bg-white border-l border-gray-200 shadow-xl z-40 transform transition-transform duration-300 ease-in-out
+        fixed top-0 right-0 h-full bg-white border-l border-gray-200 shadow-xl z-40 transform transition-all duration-300 ease-in-out
+        ${isCollapsed ? "w-16" : "w-80"}
         lg:translate-x-0
         ${isOpen ? "translate-x-0" : "translate-x-full"}
       `}>
-<div className="p-6 h-full overflow-y-auto">
+        {!isCollapsed ? (
+          <div className="p-6 h-full overflow-y-auto">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
@@ -157,7 +160,101 @@ const StickyNavigation = () => {
               </button>
             </div>
           </div>
-        </div>
+</div>
+        ) : (
+          /* Collapsed State */
+          <div className="p-2 h-full flex flex-col items-center gap-4 pt-20">
+            {/* Collapsed Navigation Items */}
+            <button
+              onClick={() => {
+                document.getElementById("prerequisites")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className={`
+                p-3 rounded-lg transition-all duration-200 w-12 h-12 flex items-center justify-center
+                ${activeSection === "prerequisites" 
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg" 
+                  : "text-gray-600 hover:bg-surface hover:text-primary"
+                }
+              `}
+              title="Prerequisites"
+            >
+              <ApperIcon 
+                name="CheckSquare" 
+                size={20} 
+                className={activeSection === "prerequisites" ? "text-white" : "text-gray-400"}
+              />
+            </button>
+
+            {/* Collapsed Steps */}
+            {steps.map((step) => (
+              <button
+                key={step.id}
+                onClick={() => {
+                  document.getElementById(`step-${step.id}`)?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className={`
+                  p-3 rounded-lg transition-all duration-200 w-12 h-12 flex items-center justify-center relative
+                  ${activeSection === `step-${step.id}` 
+                    ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg" 
+                    : "text-gray-600 hover:bg-surface hover:text-primary"
+                  }
+                `}
+                title={step.title}
+              >
+                <ApperIcon 
+                  name={step.isCompleted ? "CheckCircle" : "Circle"} 
+                  size={20} 
+                  className={
+                    step.isCompleted 
+                      ? "text-success" 
+                      : activeSection === `step-${step.id}` 
+                        ? "text-white" 
+                        : "text-gray-400"
+                  }
+                />
+                <span className="absolute -bottom-1 -right-1 text-xs font-bold bg-gray-100 rounded-full w-5 h-5 flex items-center justify-center">
+                  {step.id}
+                </span>
+              </button>
+            ))}
+
+            {/* Collapsed Pro Tips */}
+            <button
+              onClick={() => {
+                document.getElementById("pro-tips")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className={`
+                p-3 rounded-lg transition-all duration-200 w-12 h-12 flex items-center justify-center
+                ${activeSection === "pro-tips" 
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg" 
+                  : "text-gray-600 hover:bg-surface hover:text-primary"
+                }
+              `}
+              title="Pro Tips"
+            >
+              <ApperIcon 
+                name="Lightbulb" 
+                size={20} 
+                className={activeSection === "pro-tips" ? "text-white" : "text-gray-400"}
+              />
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Toggle Button */}
+      <div className="hidden lg:block fixed top-6 right-6 z-50">
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="p-3 bg-white rounded-full shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-200"
+          title={isCollapsed ? "Expand Navigation" : "Collapse Navigation"}
+        >
+          <ApperIcon 
+            name={isCollapsed ? "ChevronLeft" : "ChevronRight"} 
+            size={24} 
+            className="text-gray-700" 
+          />
+        </button>
       </div>
 
       {/* Overlay for mobile */}
