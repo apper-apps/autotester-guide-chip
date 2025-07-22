@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ApperIcon } from "@/components/ApperIcon";
+import ApperIcon from "@/components/ApperIcon";
 
-const ProgressBar = ({ 
+export default function ProgressBar({
   completedSteps = 0, 
   totalSteps = 4, 
   className = "",
   onClose
-}) => {
+}) {
   const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 
   return (
@@ -69,5 +69,3 @@ const ProgressBar = ({
     </div>
   );
 };
-
-export default ProgressBar;
