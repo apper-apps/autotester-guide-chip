@@ -1,0 +1,111 @@
+{
+  "steps": [
+    {
+      "id": 1,
+      "title": "Create Your Project & Record Complete Feature Flow",
+      "description": "Install extension and capture comprehensive user workflows",
+      "content": [
+        "**Install the Chrome Extension** - Add the AutoTester Chrome Extension and pin it to your toolbar",
+        "**Create a new project** by providing:\n• Recording name (e.g., \"User Login Flow\")\n• Your app's starting URL\n• Brief description of your web application",
+        "**Record your complete feature** — Be thorough:\n• ✅ **Click on ALL necessary fields** (required and optional)\n• ✅ **Fill out forms completely** — don't skip any inputs\n• ✅ **Navigate through the entire user journey** from start to finish\n• ✅ **Include success/error scenarios** — try both valid and invalid inputs\n• ✅ **Interact with all UI elements** — buttons, dropdowns, checkboxes, etc.",
+        "**Stop recording** when you've covered the complete feature"
+      ],
+      "proTip": "The more complete your recording, the better AI can understand your app and generate comprehensive test cases",
+      "timeEstimate": 5,
+      "isCompleted": false,
+      "isExpanded": false
+    },
+    {
+      "id": 2,
+      "title": "Validate Flow & Generate Test Cases",
+      "description": "Review recordings and let AI generate comprehensive test scenarios",
+      "content": [
+        "**Review your recorded flow** — AutoTester analyzes everything you captured",
+        "**Add assertions and validations**:\n• ✅ **Validate success messages** — confirm expected outcomes\n• ✅ **Check error handling** — verify proper error messages appear\n• ✅ **Validate field requirements** — ensure mandatory fields are enforced\n• ✅ **Confirm navigation flows** — verify correct page transitions",
+        "**AI generates comprehensive test scenarios** including:\n• Edge cases and boundary conditions\n• Error scenarios and negative testing\n• Field validation and form submission checks",
+        "**Select and customize test cases** — choose which scenarios are most important for your app"
+      ],
+      "proTip": "Use descriptive names for your recordings to help AI generate better test cases",
+      "timeEstimate": 3,
+      "isCompleted": false,
+      "isExpanded": false
+    },
+    {
+      "id": 3,
+      "title": "AI Creates Executable Test Steps",
+      "description": "AI processes your workflow and creates optimized test automation",
+      "content": [
+        "**AI processes your validated flow** and generates:\n• Optimized test steps with minimal actions\n• Proper element locators and interactions\n• Smart success/failure assertions with specific messages\n• Complete test workflows from start to finish",
+        "**Review and refine** — customize test steps if needed",
+        "**Your test suite is ready** — no coding required!"
+      ],
+      "proTip": "Review AI suggestions and customize test cases to match your specific requirements",
+      "timeEstimate": 2,
+      "isCompleted": false,
+      "isExpanded": false
+    },
+    {
+      "id": 4,
+      "title": "Run Tests & Catch Bugs",
+      "description": "Execute your automated tests and get detailed results",
+      "content": [
+        "**Execute your test suite** with one click",
+        "**Get detailed results** showing:\n• What passed and what failed\n• Screenshots of any issues\n• Specific error messages and assertions",
+        "**Fix bugs before users find them**"
+      ],
+      "proTip": "Start simple with your core user flows like login, checkout, or key user actions",
+      "timeEstimate": 5,
+      "isCompleted": false,
+      "isExpanded": false
+    }
+  ],
+  "prerequisites": [
+    {
+      "id": "chrome",
+      "label": "Chrome Browser Required",
+      "description": "AutoTester currently supports Chrome only",
+      "isChecked": false,
+      "icon": "Chrome"
+    },
+    {
+      "id": "url",
+      "label": "Your Web App URL",
+      "description": "Have the application you want to test ready",
+      "isChecked": false,
+      "icon": "Globe"
+    },
+    {
+      "id": "time",
+      "label": "15 Minutes",
+      "description": "That's all you need to create your first test",
+      "isChecked": false,
+      "icon": "Clock"
+    }
+  ],
+  "proTips": [
+    {
+      "id": "start-simple",
+      "title": "Start Simple",
+      "content": "Begin with your core user flows (login, checkout, etc.)",
+      "icon": "Target"
+    },
+    {
+      "id": "descriptive-names",
+      "title": "Use Descriptive Names",
+      "content": "Clear recording names help AI generate better test cases",
+      "icon": "FileText"
+    },
+    {
+      "id": "one-feature",
+      "title": "Test One Feature at a Time",
+      "content": "Focus recordings on specific functionality",
+      "icon": "Focus"
+    },
+    {
+      "id": "review-suggestions",
+      "title": "Review AI Suggestions",
+      "content": "Customize test cases to match your requirements",
+      "icon": "Eye"
+    }
+  ]
+}
