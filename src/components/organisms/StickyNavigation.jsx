@@ -10,7 +10,7 @@ const StickyNavigation = () => {
   const [steps, setSteps] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  
+  const [showVideoModal, setShowVideoModal] = useState(false);
   const sectionIds = ["prerequisites", "step-1", "step-2", "step-3", "step-4", "pro-tips"];
   const activeSection = useScrollSpy(sectionIds);
 
@@ -62,12 +62,21 @@ const StickyNavigation = () => {
         lg:translate-x-0
         ${isOpen ? "translate-x-0" : "translate-x-full"}
       `}>
-        <div className="p-6 h-full overflow-y-auto">
+<div className="p-6 h-full overflow-y-auto">
           {/* Header */}
           <div className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
-              Quick Start Guide
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">
+                Quick Start Guide
+              </h3>
+              <button
+                onClick={() => setShowVideoModal(true)}
+                className="p-2 text-primary hover:bg-surface rounded-lg transition-all duration-200 hover:scale-105"
+                title="Watch Quick Start Video"
+              >
+                <ApperIcon name="Play" size={20} />
+              </button>
+            </div>
             <div className="flex items-center gap-3">
               <ProgressRing 
                 progress={progressPercentage}
@@ -80,7 +89,6 @@ const StickyNavigation = () => {
               </div>
             </div>
           </div>
-
           {/* Navigation Items */}
           <div className="space-y-2">
             {/* Prerequisites */}
@@ -177,6 +185,103 @@ const StickyNavigation = () => {
           >
             <ApperIcon name="ArrowUp" size={24} />
           </motion.button>
+)}
+      </AnimatePresence>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {showVideoModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4"
+            onClick={() => setShowVideoModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Quick Start Video Tutorial
+                </h2>
+                <button
+                  onClick={() => setShowVideoModal(false)}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200"
+                >
+                  <ApperIcon name="X" size={24} />
+                </button>
+              </div>
+              
+              {/* Video Container */}
+              <div className="relative bg-black">
+                <div className="aspect-video w-full">
+                  {/* Placeholder for video player - replace with actual video */}
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
+                    <div className="text-center">
+                      <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <ApperIcon name="Play" size={48} className="text-white ml-2" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        Getting Started in 3 Minutes
+                      </h3>
+                      <p className="text-white/80 text-lg">
+                        Learn how to set up and use our tool quickly
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Video would go here - example with iframe */}
+                  {/* 
+                  <iframe
+                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                    title="Quick Start Guide Video"
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                  */}
+                </div>
+              </div>
+              
+              {/* Modal Footer */}
+              <div className="p-6 bg-gray-50 border-t border-gray-200">
+                <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">
+                      Prefer reading? 
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Follow our step-by-step written guide below
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowVideoModal(false)}
+                      className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowVideoModal(false);
+                        document.getElementById("prerequisites")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200"
+                    >
+                      Start Guide
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
