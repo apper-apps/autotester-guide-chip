@@ -1,22 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import HeroSection from "@/components/organisms/HeroSection";
 import PrerequisitesSection from "@/components/organisms/PrerequisitesSection";
 import StepsSection from "@/components/organisms/StepsSection";
 import ProTipsSection from "@/components/organisms/ProTipsSection";
 import StickyNavigation from "@/components/organisms/StickyNavigation";
+import ProgressBar from "@/components/atoms/ProgressBar";
+import { guideService } from "@/services/api/guideService";
 
 const GuidePage = () => {
-  return (
+  const [steps, setSteps] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadSteps = async () => {
+    try {
+      setLoading(true);
+      const data = await guideService.getSteps();
+      setSteps(data);
+    } catch (err) {
+      console.error("Error loading steps:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSteps();
+  }, []);
+
+  const handleUpdateStep = (updatedStep) => {
+    setSteps(prev => 
+      prev.map(step => 
+        step.id === updatedStep.id ? updatedStep : step
+      )
+    );
+  };
+
+  const completedSteps = steps.filter(step => step.isCompleted).length;
+  const totalSteps = steps.length;
+return (
     <div className="min-h-screen bg-white">
+      {/* Progress Bar at Top */}
+      {!loading && totalSteps > 0 && (
+        <ProgressBar 
+          completedSteps={completedSteps}
+          totalSteps={totalSteps}
+        />
+      )}
+
       {/* Hero Section */}
-      <HeroSection />
+      <div className="pt-20">
+        <HeroSection />
+      </div>
 
       {/* Prerequisites Section */}
       <PrerequisitesSection />
 
-      {/* Steps Section */}
+{/* Steps Section */}
       <div id="steps">
-        <StepsSection />
+        <StepsSection 
+          steps={steps}
+          loading={loading}
+          onUpdateStep={handleUpdateStep}
+          onRetry={loadSteps}
+        />
       </div>
 
       {/* Pro Tips Section */}

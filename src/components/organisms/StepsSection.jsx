@@ -6,43 +6,37 @@ import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
-const StepsSection = () => {
-  const [steps, setSteps] = useState([]);
-  const [loading, setLoading] = useState(true);
+const StepsSection = ({ 
+  steps = [], 
+  loading = true, 
+  onUpdateStep, 
+  onRetry 
+}) => {
   const [error, setError] = useState("");
   const [sectionRef, isIntersecting, hasIntersected] = useIntersectionObserver();
-
-  const loadSteps = async () => {
+const loadSteps = async () => {
     try {
       setError("");
-      setLoading(true);
-      const data = await guideService.getSteps();
-      setSteps(data);
+      if (onRetry) {
+        await onRetry();
+      }
     } catch (err) {
       setError("Failed to load steps. Please try again.");
       console.error("Error loading steps:", err);
-    } finally {
-      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    loadSteps();
-  }, []);
-
   const handleUpdateStep = (updatedStep) => {
-    setSteps(prev => 
-      prev.map(step => 
-        step.id === updatedStep.id ? updatedStep : step
-      )
-    );
+    if (onUpdateStep) {
+      onUpdateStep(updatedStep);
+    }
   };
 
   const completedSteps = steps.filter(step => step.isCompleted).length;
   const totalSteps = steps.length;
   const progressPercentage = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 
-  if (loading) return <Loading />;
+if (loading) return <Loading />;
   if (error) return <Error message={error} onRetry={loadSteps} />;
 
   return (
