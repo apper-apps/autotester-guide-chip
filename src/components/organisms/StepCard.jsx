@@ -88,7 +88,7 @@ const StepCard = ({ step, onUpdateStep }) => {
       }`}
     >
       {/* Header */}
-      <StepHeader
+<StepHeader
         stepNumber={id}
         title={title}
         description={description}
